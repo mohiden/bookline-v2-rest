@@ -1,6 +1,6 @@
 import { Application } from "express";
 import { requireUser } from "./middleware";
-import { bookRoutes, userRoutes } from "./routes";
+import { bookRoutes, shipmentRoutes, userRoutes } from "./routes";
 
 export const routes = (app: Application) => {
   // all routes here.
@@ -10,4 +10,5 @@ export const routes = (app: Application) => {
   });
   app.use("/api/user", userRoutes);
   app.use("/api/book", requireUser, bookRoutes);
+  app.use("/api/shipment", requireUser, shipmentRoutes);
 };

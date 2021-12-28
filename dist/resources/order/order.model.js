@@ -7,6 +7,11 @@ exports.OrderModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const nanoid_1 = require("nanoid");
 const COLLECTION_NAME = "orders";
+const orderBooksSchema = new mongoose_1.default.Schema({
+    book: { type: mongoose_1.default.Schema.Types.ObjectId, required: true, ref: "Book" },
+    amount: { type: mongoose_1.default.Schema.Types.Number, required: true },
+    price: { type: mongoose_1.default.Schema.Types.Number, required: true },
+});
 const schema = new mongoose_1.default.Schema({
     name: {
         type: mongoose_1.default.Schema.Types.String,
@@ -24,12 +29,8 @@ const schema = new mongoose_1.default.Schema({
         type: mongoose_1.default.Schema.Types.String,
         required: true,
     },
-    isDelivered: {
-        type: mongoose_1.default.Schema.Types.Boolean,
-        required: true,
-        default: false,
-    },
-    isOrdered: {
+    books: { type: [orderBooksSchema], default: [] },
+    isSold: {
         type: mongoose_1.default.Schema.Types.Boolean,
         required: true,
         default: false,

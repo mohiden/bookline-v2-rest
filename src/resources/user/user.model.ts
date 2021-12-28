@@ -10,6 +10,7 @@ const schema = new mongoose.Schema<IUser>(
       type: mongoose.Schema.Types.String,
       required: true,
       unique: true,
+      index: true,
     },
     password: {
       type: mongoose.Schema.Types.String,

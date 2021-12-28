@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
 import { nanoid } from "nanoid";
-import { IOrder } from "../../lib";
+import { IOrder, IOrderBooks } from "../../lib";
 
 const COLLECTION_NAME = "orders";
+
+const orderBooksSchema = new mongoose.Schema<IOrderBooks>({
+  book: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Book" },
+  amount: { type: mongoose.Schema.Types.Number, required: true },
+  price: { type: mongoose.Schema.Types.Number, required: true },
+});
 
 const schema = new mongoose.Schema<IOrder>(
   {
@@ -22,12 +28,9 @@ const schema = new mongoose.Schema<IOrder>(
       type: mongoose.Schema.Types.String,
       required: true,
     },
-    isDelivered: {
-      type: mongoose.Schema.Types.Boolean,
-      required: true,
-      default: false,
-    },
-    isOrdered: {
+    books: { type: [orderBooksSchema], default: [] },
+
+    isSold: {
       type: mongoose.Schema.Types.Boolean,
       required: true,
       default: false,

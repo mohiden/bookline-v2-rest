@@ -9,6 +9,7 @@ const routes = (app) => {
     });
     app.use("/api/user", routes_1.userRoutes);
     app.use("/api/book", middleware_1.requireUser, routes_1.bookRoutes);
+    app.use("/api/shipment", middleware_1.requireUser, routes_1.shipmentRoutes);
 };
 exports.routes = routes;
 //# sourceMappingURL=mainRoutes.js.map

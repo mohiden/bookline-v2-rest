@@ -12,6 +12,7 @@ const schema = new mongoose_1.default.Schema({
         type: mongoose_1.default.Schema.Types.String,
         required: true,
         unique: true,
+        index: true,
     },
     password: {
         type: mongoose_1.default.Schema.Types.String,
