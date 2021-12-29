@@ -1,14 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.router = void 0;
 const express_1 = require("express");
 const middleware_1 = require("../middleware");
 const resources_1 = require("../resources");
 const router = (0, express_1.Router)();
-exports.router = router;
-router.get("/", (req, res) => {
-    console.log(req.body);
-    res.send("Here");
-});
+router.get("/:select?", (0, middleware_1.validateResource)(resources_1.getBooksSchema), resources_1.getBooksHandler);
 router.post("/", (0, middleware_1.validateResource)(resources_1.createBookSchema), resources_1.createBookHandler);
+exports.default = router;
 //# sourceMappingURL=book.routes.js.map

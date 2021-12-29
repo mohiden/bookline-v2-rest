@@ -1,3 +1,9 @@
 import { Router } from "express";
+import { validateResource } from "../middleware";
+import { createOrderHandler, createOrderSchema } from "../resources";
 
-export const router = Router();
+const router = Router();
+
+router.post("/", validateResource(createOrderSchema), createOrderHandler);
+
+export default router;

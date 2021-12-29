@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.router = void 0;
 const express_1 = require("express");
-exports.router = (0, express_1.Router)();
+const middleware_1 = require("../middleware");
+const resources_1 = require("../resources");
+const router = (0, express_1.Router)();
+router.post("/", (0, middleware_1.validateResource)(resources_1.createOrderSchema), resources_1.createOrderHandler);
+exports.default = router;
 //# sourceMappingURL=order.routes.js.map

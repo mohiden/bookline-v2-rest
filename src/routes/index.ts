@@ -1,6 +1,13 @@
-import { router as orderRoutes } from "./order.routes";
-import { router as bookRoutes } from "./book.routes";
-import { router as userRoutes } from "./user.routes";
-import { router as shipmentRoutes } from "./shipment.routes";
+import bookRoutes from "./book.routes";
+import userRoutes from "./user.routes";
+import shipmentRoutes from "./shipment.routes";
+import orderRoutes from "./order.routes";
+import shipmentItemRoutes from "./shipmentItem.routes";
 
-export { orderRoutes, bookRoutes, userRoutes, shipmentRoutes };
+export {
+  bookRoutes,
+  userRoutes,
+  shipmentRoutes,
+  orderRoutes,
+  shipmentItemRoutes,
+};

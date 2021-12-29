@@ -14,4 +14,6 @@ __exportStar(require("./book"), exports);
 __exportStar(require("./user"), exports);
 __exportStar(require("./order"), exports);
 __exportStar(require("./shipment"), exports);
+__exportStar(require("./shipmentItem"), exports);
+__exportStar(require("./customer"), exports);
 //# sourceMappingURL=index.js.map

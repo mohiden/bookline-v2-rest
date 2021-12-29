@@ -14,13 +14,13 @@ const schema = new mongoose_1.default.Schema({
     },
     author: {
         type: mongoose_1.default.Schema.Types.String,
-        required: true,
+        default: "",
     },
     language: {
         type: mongoose_1.default.Schema.Types.String,
         enum: ["AR", "EN", "OTHER"],
         required: true,
     },
-});
+}, { timestamps: true });
 exports.BookModel = mongoose_1.default.model("Book", schema, COLLECTION_NAME);
 //# sourceMappingURL=book.model.js.map

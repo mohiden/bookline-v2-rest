@@ -1,14 +1,7 @@
 import mongoose from "mongoose";
-import { nanoid } from "nanoid";
-import { IOrder, IOrderBooks } from "../../lib";
+import { IOrder } from "../../lib";
 
 const COLLECTION_NAME = "orders";
-
-const orderBooksSchema = new mongoose.Schema<IOrderBooks>({
-  book: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Book" },
-  amount: { type: mongoose.Schema.Types.Number, required: true },
-  price: { type: mongoose.Schema.Types.Number, required: true },
-});
 
 const schema = new mongoose.Schema<IOrder>(
   {
@@ -20,7 +13,7 @@ const schema = new mongoose.Schema<IOrder>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    area: {
+    address: {
       type: mongoose.Schema.Types.String,
       required: true,
     },
@@ -28,22 +21,37 @@ const schema = new mongoose.Schema<IOrder>(
       type: mongoose.Schema.Types.String,
       required: true,
     },
-    books: { type: [orderBooksSchema], default: [] },
-
-    isSold: {
+    isDelivered: {
       type: mongoose.Schema.Types.Boolean,
-      required: true,
       default: false,
     },
-    orderId: {
-      type: mongoose.Schema.Types.String,
+    shipmentItem: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
-      default: () => `order_${nanoid()}`,
+      ref: "ShipmentItem",
+    },
+    discount: {
+      type: mongoose.Schema.Types.Number,
+      default: 0,
+    },
+    totalPrice: {
+      type: mongoose.Schema.Types.Number,
+      default: 0,
+    },
+    amount: {
+      type: mongoose.Schema.Types.Number,
+      default: 0,
     },
   },
   { timestamps: true }
 );
 
+//generate the totalPrice and discount the discount amount from the totalPrice
+schema.methods.genDiscountAndTotalPrice = function (price: number) {
+  this.totalPrice = this.amount * price;
+  this.totalPrice =
+    this.discount > 0 ? this.totalPrice - this.discount : this.totalPrice;
+};
 export const OrderModel = mongoose.model<IOrder>(
   "Order",
   schema,

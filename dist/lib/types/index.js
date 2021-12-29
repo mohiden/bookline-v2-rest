@@ -14,4 +14,6 @@ __exportStar(require("./book.types"), exports);
 __exportStar(require("./user.types"), exports);
 __exportStar(require("./order.types"), exports);
 __exportStar(require("./shipment.types"), exports);
+__exportStar(require("./shipmentItem.types"), exports);
+__exportStar(require("./customer.types"), exports);
 //# sourceMappingURL=index.js.map

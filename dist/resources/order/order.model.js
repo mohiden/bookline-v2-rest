@@ -5,13 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const nanoid_1 = require("nanoid");
 const COLLECTION_NAME = "orders";
-const orderBooksSchema = new mongoose_1.default.Schema({
-    book: { type: mongoose_1.default.Schema.Types.ObjectId, required: true, ref: "Book" },
-    amount: { type: mongoose_1.default.Schema.Types.Number, required: true },
-    price: { type: mongoose_1.default.Schema.Types.Number, required: true },
-});
 const schema = new mongoose_1.default.Schema({
     name: {
         type: mongoose_1.default.Schema.Types.String,
@@ -21,7 +15,7 @@ const schema = new mongoose_1.default.Schema({
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "User",
     },
-    area: {
+    address: {
         type: mongoose_1.default.Schema.Types.String,
         required: true,
     },
@@ -29,17 +23,32 @@ const schema = new mongoose_1.default.Schema({
         type: mongoose_1.default.Schema.Types.String,
         required: true,
     },
-    books: { type: [orderBooksSchema], default: [] },
-    isSold: {
+    isDelivered: {
         type: mongoose_1.default.Schema.Types.Boolean,
-        required: true,
         default: false,
     },
-    orderId: {
-        type: mongoose_1.default.Schema.Types.String,
+    shipmentItem: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
         required: true,
-        default: () => `order_${(0, nanoid_1.nanoid)()}`,
+        ref: "ShipmentItem",
+    },
+    discount: {
+        type: mongoose_1.default.Schema.Types.Number,
+        default: 0,
+    },
+    totalPrice: {
+        type: mongoose_1.default.Schema.Types.Number,
+        default: 0,
+    },
+    amount: {
+        type: mongoose_1.default.Schema.Types.Number,
+        default: 0,
     },
 }, { timestamps: true });
+schema.methods.genDiscountAndTotalPrice = function (price) {
+    this.totalPrice = this.amount * price;
+    this.totalPrice =
+        this.discount > 0 ? this.totalPrice - this.discount : this.totalPrice;
+};
 exports.OrderModel = mongoose_1.default.model("Order", schema, COLLECTION_NAME);
 //# sourceMappingURL=order.model.js.map

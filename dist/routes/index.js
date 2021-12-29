@@ -1,12 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.shipmentRoutes = exports.userRoutes = exports.bookRoutes = exports.orderRoutes = void 0;
-const order_routes_1 = require("./order.routes");
-Object.defineProperty(exports, "orderRoutes", { enumerable: true, get: function () { return order_routes_1.router; } });
-const book_routes_1 = require("./book.routes");
-Object.defineProperty(exports, "bookRoutes", { enumerable: true, get: function () { return book_routes_1.router; } });
-const user_routes_1 = require("./user.routes");
-Object.defineProperty(exports, "userRoutes", { enumerable: true, get: function () { return user_routes_1.router; } });
-const shipment_routes_1 = require("./shipment.routes");
-Object.defineProperty(exports, "shipmentRoutes", { enumerable: true, get: function () { return shipment_routes_1.router; } });
+exports.shipmentItemRoutes = exports.orderRoutes = exports.shipmentRoutes = exports.userRoutes = exports.bookRoutes = void 0;
+const book_routes_1 = __importDefault(require("./book.routes"));
+exports.bookRoutes = book_routes_1.default;
+const user_routes_1 = __importDefault(require("./user.routes"));
+exports.userRoutes = user_routes_1.default;
+const shipment_routes_1 = __importDefault(require("./shipment.routes"));
+exports.shipmentRoutes = shipment_routes_1.default;
+const order_routes_1 = __importDefault(require("./order.routes"));
+exports.orderRoutes = order_routes_1.default;
+const shipmentItem_routes_1 = __importDefault(require("./shipmentItem.routes"));
+exports.shipmentItemRoutes = shipmentItem_routes_1.default;
 //# sourceMappingURL=index.js.map

@@ -1,12 +1,15 @@
 import { Router } from "express";
 import { validateResource } from "../middleware";
-import { createBookHandler, createBookSchema } from "../resources";
+import {
+  createBookHandler,
+  createBookSchema,
+  getBooksHandler,
+  getBooksSchema,
+} from "../resources";
 
 const router = Router();
-router.get("/", (req, res) => {
-  console.log(req.body);
-  res.send("Here");
-});
+
+router.get("/:select?", validateResource(getBooksSchema), getBooksHandler);
 router.post("/", validateResource(createBookSchema), createBookHandler);
 
-export { router };
+export default router;

@@ -7,7 +7,9 @@ import {
   loginUserSchema,
 } from "../resources";
 
-export const router = Router();
+const router = Router();
 
 router.post("/", validateResource(createUserSchema), createUserHandler);
 router.post("/login", validateResource(loginUserSchema), loginUserHandler);
+
+export default router;

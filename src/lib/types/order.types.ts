@@ -1,17 +1,15 @@
-import { BaseModel, IBook, IUser } from ".";
+import { BaseModel, IShipmentItem, ItemType, IUser } from ".";
 
 export interface IOrder extends BaseModel {
   name: string;
+  shipmentItem: IShipmentItem["_id"];
+  type: ItemType | string;
   createdBy: IUser["_id"];
-  area: string;
+  address: string;
   phone: string;
-  books: Array<IOrderBooks>;
-  isSold: boolean;
-  orderId: string;
-}
-
-export type IOrderBooks = {
-  book: IBook["_id"];
+  isDelivered?: boolean;
+  totalPrice?: number;
+  discount: number;
   amount: number;
-  price: number;
-};
+  genDiscountAndTotalPrice: (price: number) => void;
+}
