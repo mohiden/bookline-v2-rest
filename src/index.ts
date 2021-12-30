@@ -1,6 +1,5 @@
 import "dotenv/config";
 import express from "express";
-import config from "config";
 import { makeConnection } from "./database";
 import { routes } from "./mainRoutes";
 import { deserializeUser } from "./middleware";
@@ -12,7 +11,7 @@ async function main() {
   app.use(deserializeUser);
   await makeConnection();
 
-  app.listen(config.get<string>("port"), () => {
+  app.listen(process.env.PORT || 1337, () => {
     console.log("Running!");
     routes(app);
   });

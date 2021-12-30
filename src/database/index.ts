@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import config from "config";
+const URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.cvuzm.mongodb.net/main?retryWrites=true&w=majority`;
 export const makeConnection = async () => {
   try {
-    await mongoose.connect(config.get<string>("dbUri"));
+    await mongoose.connect(URI);
     console.log("Connected to DB.");
   } catch (e) {
     console.log(e);
