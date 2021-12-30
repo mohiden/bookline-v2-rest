@@ -2,9 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getShipmentItemsHandler = exports.createShipmentItemHandler = void 0;
 const _1 = require(".");
+const __1 = require("..");
 const createShipmentItemHandler = async (req, res) => {
     console.log(req.body);
     try {
+        const shipment = await __1.ShipmentModel.findOne({ _id: req.body.shipment });
+        if (!shipment)
+            throw new Error("Shipment was not found");
         return res.send(await (0, _1.createShipmentItem)(req.body));
     }
     catch (e) {

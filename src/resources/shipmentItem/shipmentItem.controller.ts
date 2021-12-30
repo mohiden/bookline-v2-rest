@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import { createShipmentItem, getShipmentItems, GetShipmentItemsInput } from ".";
+import { ShipmentModel } from "..";
 import { CreateShipmentItemInput } from "./shipmentItem.schema";
 
 export const createShipmentItemHandler = async (
@@ -8,6 +9,8 @@ export const createShipmentItemHandler = async (
 ) => {
   console.log(req.body);
   try {
+    const shipment = await ShipmentModel.findOne({ _id: req.body.shipment });
+    if (!shipment) throw new Error("Shipment was not found");
     return res.send(await createShipmentItem(req.body));
   } catch (e) {
     console.log(e);
