@@ -11,9 +11,11 @@ import {
 export const routes = (app: Application) => {
   // all routes here.
 
+  //health check
   app.get("/api", (_, res) => {
     res.send("working");
   });
+
   app.use("/api/user", userRoutes);
   app.use("/api/book", requireUser, bookRoutes);
   app.use("/api/shipment", requireUser, shipmentRoutes);

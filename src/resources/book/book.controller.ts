@@ -48,6 +48,7 @@ export const getBooksHandler = async (
     });
   } catch (e) {
     console.log(e);
+    //error if page number is negative = -1 ..etc
     if (e && e.code && e.code === 51024) {
       return res.status(400).send("page number must be 0 or greater");
     }
