@@ -3,10 +3,14 @@ import express from "express";
 import { makeConnection } from "./database";
 import { routes } from "./mainRoutes";
 import { deserializeUser } from "./middleware";
+import cors from 'cors';
 
 async function main() {
   const app = express();
   //middleware
+  app.use(cors({
+    origin: 'http://localhost:3000',
+  }));
   app.use(express.json());
   app.use(deserializeUser);
   await makeConnection();

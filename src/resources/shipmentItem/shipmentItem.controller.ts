@@ -9,8 +9,10 @@ export const createShipmentItemHandler = async (
 ) => {
   console.log(req.body);
   try {
+    //first check if shipment id is valid or exists
     const shipment = await ShipmentModel.findOne({ _id: req.body.shipment });
     if (!shipment) throw new Error("Shipment was not found");
+
     return res.send(await createShipmentItem(req.body));
   } catch (e) {
     console.log(e);
