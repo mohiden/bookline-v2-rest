@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { createBook, CreateBookInput, getBooks, GetBooksInput } from ".";
+
+//create
 export const createBookHandler = async (
   req: Request<{}, {}, CreateBookInput["body"]>,
   res: Response
@@ -25,6 +27,7 @@ export const createBookHandler = async (
   }
 };
 
+//get all
 export const getBooksHandler = async (
   req: Request<
     GetBooksInput["params"],
@@ -42,10 +45,7 @@ export const getBooksHandler = async (
       },
       req.params.select
     );
-    return res.send({
-      data: books,
-      count: books.length,
-    });
+    return res.send(books);
   } catch (e) {
     console.log(e);
     //error if page number is negative = -1 ..etc

@@ -6,6 +6,7 @@ import {
   GetShipmentsInput,
 } from ".";
 
+//create
 export const createShipmentHandler = async (
   req: Request<{}, {}, CreateShipmentInput["body"]>,
   res: Response
@@ -22,6 +23,7 @@ export const createShipmentHandler = async (
   }
 };
 
+//get all
 export const getShipmentsHandler = async (
   req: Request<
     GetShipmentsInput["params"],

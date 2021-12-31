@@ -26,10 +26,7 @@ const getBooksHandler = async (req, res) => {
             limit: Number(req.query.size),
             skip: Number(req.query.page),
         }, req.params.select);
-        return res.send({
-            data: books,
-            count: books.length,
-        });
+        return res.send(books);
     }
     catch (e) {
         console.log(e);
