@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createOrderHandler = void 0;
+exports.getOrdersHandler = exports.createOrderHandler = void 0;
 const _1 = require(".");
 const __1 = require("..");
 const createOrderHandler = async (req, res) => {
@@ -26,4 +26,21 @@ const createOrderHandler = async (req, res) => {
     }
 };
 exports.createOrderHandler = createOrderHandler;
+const getOrdersHandler = async (req, res) => {
+    try {
+        const books = await (0, _1.getOrders)({
+            limit: Number(req.query.size),
+            skip: Number(req.query.page),
+        }, req.params.select);
+        return res.send(books);
+    }
+    catch (e) {
+        console.log(e);
+        if (e && e.code && e.code === 51024) {
+            return res.status(400).send("page number must be 0 or greater");
+        }
+        return res.status(400).send((e.message && e.message) || e.toString());
+    }
+};
+exports.getOrdersHandler = getOrdersHandler;
 //# sourceMappingURL=order.controller.js.map

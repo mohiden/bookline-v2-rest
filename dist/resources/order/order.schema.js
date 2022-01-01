@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createOrderSchema = void 0;
+exports.getOrdersSchema = exports.createOrderSchema = void 0;
+const utils_1 = require("../../utils");
 const zod_1 = require("zod");
 exports.createOrderSchema = (0, zod_1.object)({
     body: (0, zod_1.object)({
@@ -18,4 +19,5 @@ exports.createOrderSchema = (0, zod_1.object)({
         message: "type must be BOOK or OTHER",
     }),
 });
+exports.getOrdersSchema = (0, zod_1.object)(Object.assign({}, utils_1.getSharedSchema));
 //# sourceMappingURL=order.schema.js.map

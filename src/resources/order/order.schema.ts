@@ -1,3 +1,4 @@
+import { getSharedSchema } from "../../utils";
 import { number, object, string, TypeOf } from "zod";
 
 export const createOrderSchema = object({
@@ -16,5 +17,11 @@ export const createOrderSchema = object({
     message: "type must be BOOK or OTHER",
   }),
 });
-
 export type CreateOrderInput = TypeOf<typeof createOrderSchema>;
+
+// getting all books and with pagination and sorting ... etc,
+export const getOrdersSchema = object({
+  ...getSharedSchema,
+});
+export type GetOrdersInput = TypeOf<typeof getOrdersSchema>;
+
