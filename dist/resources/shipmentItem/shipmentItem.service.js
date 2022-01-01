@@ -14,18 +14,23 @@ const getShipmentItems = (options = { lean: true, skip: 0, limit: 0 }, select) =
 };
 exports.getShipmentItems = getShipmentItems;
 const shipmentItemValidation = async (amount, shipmentItemId, discount = 0) => {
+    let error = '';
     const item = await _1.shipmentItemModel.findOne({ _id: shipmentItemId });
-    if (!item)
-        throw new Error("shipment item was not found!");
+    if (!item) {
+        error = "shipment item was not found!";
+        return error;
+    }
     const isDiscountValid = item.checkDiscount(discount);
-    if (!isDiscountValid)
-        throw new Error("Discount must be less than item price");
+    if (!isDiscountValid) {
+        error = item.name + ":Discount must be less than item price";
+        return error;
+    }
     const isAmount = item.checkAmount(amount);
-    if (!isAmount)
-        throw new Error("The requested amount  is not available");
-    item.left = item.left - amount;
-    await item.save();
-    return item.price;
+    if (!isAmount) {
+        error = item.name + ":The requested amount is not available";
+        return error;
+    }
+    return;
 };
 exports.shipmentItemValidation = shipmentItemValidation;
 //# sourceMappingURL=shipmentItem.service.js.map

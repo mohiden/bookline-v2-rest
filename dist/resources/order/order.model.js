@@ -5,7 +5,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
+const __1 = require("..");
 const COLLECTION_NAME = "orders";
+const itemSchema = new mongoose_1.default.Schema({
+    shipmentItem: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        required: true,
+        ref: "shipmentItem"
+    },
+    isDelivered: {
+        type: mongoose_1.default.Schema.Types.Boolean,
+        default: false,
+    },
+    discount: {
+        type: mongoose_1.default.Schema.Types.Number,
+        default: 0,
+    },
+    amount: {
+        type: mongoose_1.default.Schema.Types.Number,
+        default: 0,
+    },
+});
 const schema = new mongoose_1.default.Schema({
     name: {
         type: mongoose_1.default.Schema.Types.String,
@@ -23,32 +43,23 @@ const schema = new mongoose_1.default.Schema({
         type: mongoose_1.default.Schema.Types.String,
         required: true,
     },
-    isDelivered: {
-        type: mongoose_1.default.Schema.Types.Boolean,
-        default: false,
-    },
-    shipmentItem: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
+    items: {
+        type: [itemSchema],
         required: true,
-        ref: "ShipmentItem",
-    },
-    discount: {
-        type: mongoose_1.default.Schema.Types.Number,
-        default: 0,
+        default: [],
     },
     totalPrice: {
         type: mongoose_1.default.Schema.Types.Number,
         default: 0,
     },
-    amount: {
-        type: mongoose_1.default.Schema.Types.Number,
-        default: 0,
-    },
 }, { timestamps: true });
-schema.methods.genDiscountAndTotalPrice = function (price) {
-    this.totalPrice = this.amount * price;
-    this.totalPrice =
-        this.discount > 0 ? this.totalPrice - this.discount : this.totalPrice;
+schema.methods.genDiscountAndTotalPrice = async function (shipmentItemId) {
+    var _a;
+    const shipmentItem = await __1.shipmentItemModel.findOne({ _id: shipmentItemId });
+    if (!shipmentItem)
+        throw new Error('Shipment item was not found!!!');
+    const itemAmount = (_a = this.items.find(item => item.shipmentItem == (shipmentItem === null || shipmentItem === void 0 ? void 0 : shipmentItem._id))) === null || _a === void 0 ? void 0 : _a.amount;
+    this.totalPrice = itemAmount * (shipmentItem === null || shipmentItem === void 0 ? void 0 : shipmentItem.price);
 };
 exports.OrderModel = mongoose_1.default.model("Order", schema, COLLECTION_NAME);
 //# sourceMappingURL=order.model.js.map

@@ -28,15 +28,27 @@ export const shipmentItemValidation = async (
   shipmentItemId: IShipmentItem["_id"],
   discount: number = 0
 ) => {
+  let error: string = '';
+
   const item = await shipmentItemModel.findOne({ _id: shipmentItemId });
-  if (!item) throw new Error("shipment item was not found!");
+  if (!item) {
+    // errors.push("shipment item was not found!");
+    error = "shipment item was not found!";
+    return error;
+  }
+
   const isDiscountValid = item.checkDiscount(discount);
-  if (!isDiscountValid)
-    throw new Error("Discount must be less than item price");
+  if (!isDiscountValid) {
+    // errors.push(item.name + ":Discount must be less than item price");
+    error = item.name + ":Discount must be less than item price";
+    return error;
+  }
+
   const isAmount = item.checkAmount(amount);
-  if (!isAmount) throw new Error("The requested amount  is not available");
-  //subtract requested amount from actual amount
-  item.left = item.left - amount;
-  await item.save();
-  return item.price;
+  if (!isAmount) {
+    error = item.name + ":The requested amount is not available";
+    return error;
+  }
+
+  return;
 };

@@ -1,7 +1,28 @@
 import mongoose from "mongoose";
-import { IOrder } from "../../lib";
+import { shipmentItemModel } from "..";
+import { IItem, IOrder } from "../../lib";
 
 const COLLECTION_NAME = "orders";
+
+const itemSchema = new mongoose.Schema<IItem>({
+  shipmentItem: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "shipmentItem"
+  },
+  isDelivered: {
+    type: mongoose.Schema.Types.Boolean,
+    default: false,
+  },
+  discount: {
+    type: mongoose.Schema.Types.Number,
+    default: 0,
+  },
+  amount: {
+    type: mongoose.Schema.Types.Number,
+    default: 0,
+  },
+})
 
 const schema = new mongoose.Schema<IOrder>(
   {
@@ -21,24 +42,12 @@ const schema = new mongoose.Schema<IOrder>(
       type: mongoose.Schema.Types.String,
       required: true,
     },
-    isDelivered: {
-      type: mongoose.Schema.Types.Boolean,
-      default: false,
-    },
-    shipmentItem: {
-      type: mongoose.Schema.Types.ObjectId,
+    items: {
+      type: [itemSchema],
       required: true,
-      ref: "ShipmentItem",
-    },
-    discount: {
-      type: mongoose.Schema.Types.Number,
-      default: 0,
+      default: [],
     },
     totalPrice: {
-      type: mongoose.Schema.Types.Number,
-      default: 0,
-    },
-    amount: {
       type: mongoose.Schema.Types.Number,
       default: 0,
     },
@@ -47,10 +56,11 @@ const schema = new mongoose.Schema<IOrder>(
 );
 
 //generate the totalPrice and discount the discount amount from the totalPrice
-schema.methods.genDiscountAndTotalPrice = function (price: number) {
-  this.totalPrice = this.amount * price;
-  this.totalPrice =
-    this.discount > 0 ? this.totalPrice - this.discount : this.totalPrice;
+schema.methods.genDiscountAndTotalPrice = async function (shipmentItemId: string) {
+  const shipmentItem = await shipmentItemModel.findOne({ _id: shipmentItemId });
+  if (!shipmentItem) throw new Error('Shipment item was not found!!!')
+  const itemAmount = this.items.find(item => item.shipmentItem == shipmentItem?._id)?.amount;
+  this.totalPrice = itemAmount! * shipmentItem?.price;
 };
 export const OrderModel = mongoose.model<IOrder>(
   "Order",

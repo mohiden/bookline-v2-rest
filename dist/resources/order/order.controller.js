@@ -4,19 +4,32 @@ exports.getOrdersHandler = exports.createOrderHandler = void 0;
 const _1 = require(".");
 const __1 = require("..");
 const createOrderHandler = async (req, res) => {
-    var _a;
     try {
         const user = res.locals.user;
-        const order = (0, _1.createOrder)(Object.assign(Object.assign({}, req.body), { createdBy: (_a = req.body.createdBy) !== null && _a !== void 0 ? _a : user._id }));
+        const order = (0, _1.createOrder)(Object.assign(Object.assign({}, req.body), { createdBy: user["_id"] }));
+        const errors = await Promise.all(order.items.map(async (item) => {
+            return await (0, __1.shipmentItemValidation)(item.amount, item.shipmentItem, item.discount);
+        }));
+        if (errors.filter(Boolean).length > 0) {
+            console.log(errors);
+            throw new Error(errors.toString());
+        }
+        console.log("HERE");
+        await Promise.all(order.items.map(async (item) => {
+            console.log("FETCHING item");
+            const shipmentItem = await __1.shipmentItemModel.findOne({ _id: item.shipmentItem });
+            if (shipmentItem) {
+                shipmentItem.left = (shipmentItem === null || shipmentItem === void 0 ? void 0 : shipmentItem.left) - item.amount;
+                console.log("SAVING ITEM");
+                return await shipmentItem.save();
+            }
+            return null;
+        }));
         const customer = await (0, __1.createCustomer)({
             name: order.name,
             phone: order.phone,
             address: order.address,
         });
-        const price = await (0, __1.shipmentItemValidation)(order.amount, order.shipmentItem, order.discount);
-        if (!price)
-            throw new Error("Error, please try again later..");
-        order.genDiscountAndTotalPrice(price);
         await order.save();
         return res.send({ order, customerCreated: customer });
     }

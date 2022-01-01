@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IUser } from "src/lib";
 import { createOrder, CreateOrderInput, getOrders, GetOrdersInput } from ".";
-import { createCustomer, shipmentItemValidation } from "..";
+import { createCustomer, shipmentItemModel, shipmentItemValidation } from "..";
 
 //create
 export const createOrderHandler = async (
@@ -13,8 +13,30 @@ export const createOrderHandler = async (
     //create item order
     const order = createOrder({
       ...req.body,
-      createdBy: req.body.createdBy ?? user._id,
+      createdBy: user["_id"]
     });
+
+    //validate id shipment items id are valid
+    //validate if discount is valid
+    //validate if amount is available
+    const errors = await Promise.all(order.items.map(async (item) => {
+      return await shipmentItemValidation(item.amount, item.shipmentItem, item.discount);
+    }));
+
+    if (errors.filter(Boolean).length > 0) {
+      console.log(errors);
+      throw new Error(errors.toString());
+    }
+
+    //subtract item left amount from the requested amount
+    await Promise.all(order.items.map(async (item) => {
+      const shipmentItem = await shipmentItemModel.findOne({ _id: item.shipmentItem });
+      if (shipmentItem) {
+        shipmentItem.left = shipmentItem?.left - item.amount;
+        return await shipmentItem.save();
+      }
+      return null;
+    }));
 
     //create customer who ordered the item
     const customer = await createCustomer({
@@ -23,20 +45,12 @@ export const createOrderHandler = async (
       address: order.address,
     });
 
-    //check if available and subtract item from the shipment items
-    const price = await shipmentItemValidation(
-      order.amount,
-      order.shipmentItem,
-      order.discount
-    );
-    if (!price) throw new Error("Error, please try again later..");
-    // generate total price and subtract discount if there is any
-    order.genDiscountAndTotalPrice(price);
+
     await order.save();
     return res.send({ order, customerCreated: customer });
+
   } catch (e) {
     console.log("KHALAD:", e);
-
     return res.status(400).send(e.message || "Error, please try again later");
   }
 };
