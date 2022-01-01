@@ -11,7 +11,7 @@ const itemSchema = new mongoose_1.default.Schema({
     shipmentItem: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         required: true,
-        ref: "shipmentItem"
+        ref: "ShipmentItem"
     },
     isDelivered: {
         type: mongoose_1.default.Schema.Types.Boolean,

@@ -8,7 +8,7 @@ const itemSchema = new mongoose.Schema<IItem>({
   shipmentItem: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "shipmentItem"
+    ref: "ShipmentItem"
   },
   isDelivered: {
     type: mongoose.Schema.Types.Boolean,

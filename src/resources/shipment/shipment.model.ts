@@ -7,6 +7,7 @@ const schema = new mongoose.Schema<IShipment>(
   {
     month: { type: mongoose.Schema.Types.String, required: true },
     year: { type: mongoose.Schema.Types.String, required: true },
+    total: { type: mongoose.Schema.Types.Number, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }

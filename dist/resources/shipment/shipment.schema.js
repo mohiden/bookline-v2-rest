@@ -9,6 +9,7 @@ exports.createShipmentSchema = (0, zod_1.object)({
         year: (0, zod_1.string)({ required_error: "Year must not be empty" }).max(4, {
             message: "Please enter valid year",
         }),
+        total: (0, zod_1.number)({ required_error: "Month must not be empty" }).min(1),
     }),
 });
 exports.getShipmentsSchema = (0, zod_1.object)(Object.assign({}, utils_1.getSharedSchema));

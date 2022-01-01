@@ -9,8 +9,14 @@ const createOrder = (input) => {
 exports.createOrder = createOrder;
 const getOrders = (options = { lean: true }, select) => {
     return _1.OrderModel.find({}, {}, options)
-        .populate("shipmentItem")
-        .select(select);
+        .populate({
+        path: "items",
+        populate: {
+            path: "shipmentItem",
+            select: "name type left price"
+        }
+    })
+        .select(select).exec();
 };
 exports.getOrders = getOrders;
 //# sourceMappingURL=order.service.js.map

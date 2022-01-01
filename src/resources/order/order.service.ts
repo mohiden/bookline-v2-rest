@@ -17,6 +17,12 @@ export const getOrders = (
   select?: string
 ) => {
   return OrderModel.find({}, {}, options)
-    .populate("shipmentItem")
-    .select(select);
+    .populate({
+      path: "items",
+      populate: {
+        path: "shipmentItem",
+        select: "name type left price"
+      }
+    })
+    .select(select).exec();
 };
