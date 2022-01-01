@@ -14,13 +14,10 @@ const createOrderHandler = async (req, res) => {
             console.log(errors);
             throw new Error(errors.toString());
         }
-        console.log("HERE");
         await Promise.all(order.items.map(async (item) => {
-            console.log("FETCHING item");
             const shipmentItem = await __1.shipmentItemModel.findOne({ _id: item.shipmentItem });
             if (shipmentItem) {
                 shipmentItem.left = (shipmentItem === null || shipmentItem === void 0 ? void 0 : shipmentItem.left) - item.amount;
-                console.log("SAVING ITEM");
                 return await shipmentItem.save();
             }
             return null;

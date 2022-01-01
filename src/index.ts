@@ -9,7 +9,7 @@ async function main() {
   const app = express();
   //middleware
   app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://83f4cb15.booklinev2-web.pages.dev'],
   }));
   app.use(express.json());
   app.use(deserializeUser);
