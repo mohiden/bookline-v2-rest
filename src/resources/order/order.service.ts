@@ -16,5 +16,7 @@ export const getOrders = (
   options: QueryOptions = { lean: true },
   select?: string
 ) => {
-  return OrderModel.find({}, {}, options).select(select);
+  return OrderModel.find({}, {}, options)
+    .populate("shipmentItem")
+    .select(select);
 };
