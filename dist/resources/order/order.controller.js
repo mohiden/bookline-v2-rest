@@ -18,6 +18,7 @@ const createOrderHandler = async (req, res) => {
             const shipmentItem = await __1.shipmentItemModel.findOne({ _id: item.shipmentItem });
             if (shipmentItem) {
                 shipmentItem.left = (shipmentItem === null || shipmentItem === void 0 ? void 0 : shipmentItem.left) - item.amount;
+                order.genDiscountAndTotalPrice(shipmentItem._id);
                 return await shipmentItem.save();
             }
             return null;

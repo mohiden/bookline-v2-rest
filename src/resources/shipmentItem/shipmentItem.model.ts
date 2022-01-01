@@ -24,7 +24,7 @@ const schema = new mongoose.Schema<IShipmentItem>(
   { timestamps: true }
 );
 
-//on save get the total price
+//on save set the total price
 schema.pre<IShipmentItem>("save", function () {
   if (
     this.isModified("price") &&
