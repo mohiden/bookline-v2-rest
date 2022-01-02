@@ -59,7 +59,9 @@ schema.methods.genDiscountAndTotalPrice = async function (shipmentItemId) {
     if (!shipmentItem)
         throw new Error('Shipment item was not found!!!');
     const itemAmount = (_a = this.items.find(item => item.shipmentItem.toString() === shipmentItemId.toString())) === null || _a === void 0 ? void 0 : _a.amount;
-    this.totalPrice = itemAmount * (shipmentItem === null || shipmentItem === void 0 ? void 0 : shipmentItem.price);
+    if (!itemAmount)
+        return console.log("item amount not found");
+    this.totalPrice = this.totalPrice + itemAmount * shipmentItem.price;
 };
 exports.OrderModel = mongoose_1.default.model("Order", schema, COLLECTION_NAME);
 //# sourceMappingURL=order.model.js.map

@@ -32,7 +32,7 @@ export const createOrderHandler = async (
     await Promise.all(order.items.map(async (item) => {
       const shipmentItem = await shipmentItemModel.findOne({ _id: item.shipmentItem });
       if (shipmentItem) {
-        shipmentItem.left = shipmentItem?.left - item.amount;
+        shipmentItem.left = shipmentItem.left - item.amount;
         order.genDiscountAndTotalPrice(shipmentItem._id);
         return await shipmentItem.save();
       }

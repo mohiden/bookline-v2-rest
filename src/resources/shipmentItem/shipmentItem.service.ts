@@ -39,7 +39,6 @@ export const shipmentItemValidation = async (
 
   const isDiscountValid = item.checkDiscount(discount);
   if (!isDiscountValid) {
-    // errors.push(item.name + ":Discount must be less than item price");
     error = item.name + ":Discount must be less than item price";
     return error;
   }
