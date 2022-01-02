@@ -8,7 +8,7 @@ export interface IOrder extends BaseModel {
   address: string;
   phone: string;
   totalPrice?: number;
-  genDiscountAndTotalPrice: (shipmentItemId: IShipmentItem["_id"]) => void;
+  genDiscountAndTotalPrice: (shipmentItemId: IShipmentItem["_id"], discount: number) => void;
 }
 
 export interface IItem {

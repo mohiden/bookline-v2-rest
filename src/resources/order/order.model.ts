@@ -56,12 +56,12 @@ const schema = new mongoose.Schema<IOrder>(
 );
 
 //generate the totalPrice and discount the discount amount from the totalPrice
-schema.methods.genDiscountAndTotalPrice = async function (shipmentItemId: string) {
+schema.methods.genDiscountAndTotalPrice = async function (shipmentItemId: string, discount: number) {
   const shipmentItem = await shipmentItemModel.findOne({ _id: shipmentItemId });
   if (!shipmentItem) throw new Error('Shipment item was not found!!!')
   const itemAmount = this.items.find(item => item.shipmentItem.toString() === shipmentItemId.toString())?.amount;
   if (!itemAmount) return console.log("item amount not found");
-  this.totalPrice = this.totalPrice! + itemAmount * shipmentItem.price;
+  this.totalPrice = (this.totalPrice! + itemAmount * shipmentItem.price) - discount;
 }
 
 export const OrderModel = mongoose.model<IOrder>(
