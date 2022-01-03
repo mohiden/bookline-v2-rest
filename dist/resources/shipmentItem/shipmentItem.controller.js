@@ -19,12 +19,10 @@ const createShipmentItemHandler = async (req, res) => {
 exports.createShipmentItemHandler = createShipmentItemHandler;
 const getShipmentItemsHandler = async (req, res) => {
     try {
-        return res.send({
-            data: await (0, _1.getShipmentItems)({
-                skip: Number(req.query.page),
-                limit: Number(req.query.size),
-            }, req.params.select),
-        });
+        return res.send(await (0, _1.getShipmentItems)({
+            skip: Number(req.query.page),
+            limit: Number(req.query.size),
+        }, req.params.select));
     }
     catch (e) {
         console.log(e);

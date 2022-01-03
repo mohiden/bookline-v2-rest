@@ -30,15 +30,15 @@ export const getShipmentItemsHandler = async (
   res: Response
 ) => {
   try {
-    return res.send({
-      data: await getShipmentItems(
+    return res.send(
+      await getShipmentItems(
         {
           skip: Number(req.query.page),
           limit: Number(req.query.size),
         },
         req.params.select
       ),
-    });
+    );
   } catch (e) {
     console.log(e);
     return res.status(400).send((e.message && e.message) || e.toString());
