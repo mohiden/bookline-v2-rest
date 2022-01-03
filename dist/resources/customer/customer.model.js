@@ -11,5 +11,17 @@ const schema = new mongoose_1.default.Schema({
     phone: { type: mongoose_1.default.Schema.Types.String, required: true },
     address: { type: mongoose_1.default.Schema.Types.String, required: true },
 });
+schema.statics.customersDetail = async function () {
+    const all = await this.find();
+    const names = [];
+    const phones = [];
+    const address = [];
+    await Promise.all(all.map((i) => {
+        names.push({ value: i.name });
+        phones.push({ value: i.phone });
+        address.push({ value: i.address });
+    }));
+    return { names, phones, address };
+};
 exports.CustomerModel = mongoose_1.default.model("Customer", schema, COLLECTION_NAME);
 //# sourceMappingURL=customer.model.js.map

@@ -2,9 +2,11 @@ import { Application } from "express";
 import { requireUser } from "./middleware";
 import {
   bookRoutes,
+  customerRoutes,
   orderRoutes,
   shipmentItemRoutes,
   shipmentRoutes,
+  staticRoutes,
   userRoutes,
 } from "./routes";
 
@@ -21,4 +23,6 @@ export const routes = (app: Application) => {
   app.use("/api/shipment", requireUser, shipmentRoutes);
   app.use("/api/shipmentItem", requireUser, shipmentItemRoutes);
   app.use("/api/order", requireUser, orderRoutes);
+  app.use("/api/customer", requireUser, customerRoutes);
+  app.use("/api/static", requireUser, staticRoutes);
 };
