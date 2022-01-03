@@ -12,13 +12,13 @@ schema.statics.customersDetail = async function () {
   const all: ICustomer[] = await this.find();
   const names: Array<{ value: string }> = [];
   const phones: Array<{ value: string }> = [];
-  const address: Array<{ value: string }> = [];
+  const addresses: Array<{ value: string }> = [];
   await Promise.all(all.map((i: any) => {
     names.push({ value: i.name });
     phones.push({ value: i.phone });
-    address.push({ value: i.address });
+    addresses.push({ value: i.address });
   }));
-  return { names, phones, address };
+  return { names, phones, addresses };
 }
 
 

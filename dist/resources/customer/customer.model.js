@@ -15,13 +15,13 @@ schema.statics.customersDetail = async function () {
     const all = await this.find();
     const names = [];
     const phones = [];
-    const address = [];
+    const addresses = [];
     await Promise.all(all.map((i) => {
         names.push({ value: i.name });
         phones.push({ value: i.phone });
-        address.push({ value: i.address });
+        addresses.push({ value: i.address });
     }));
-    return { names, phones, address };
+    return { names, phones, addresses };
 };
 exports.CustomerModel = mongoose_1.default.model("Customer", schema, COLLECTION_NAME);
 //# sourceMappingURL=customer.model.js.map
