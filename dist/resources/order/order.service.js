@@ -7,8 +7,8 @@ const createOrder = (input) => {
     return order;
 };
 exports.createOrder = createOrder;
-const getOrders = (options = { lean: true }, select) => {
-    return _1.OrderModel.find({}, {}, options)
+const getOrders = (options = { lean: true }, select, search) => {
+    return _1.OrderModel.find(search ? { $text: { $search: search } } : {}, {}, options)
         .populate({
         path: "items",
         populate: {

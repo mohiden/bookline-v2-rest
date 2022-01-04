@@ -43,7 +43,8 @@ export const getBooksHandler = async (
         limit: Number(req.query.size),
         skip: Number(req.query.page),
       },
-      req.params.select
+      req.params.select,
+      req.query.search
     );
     return res.send(books);
   } catch (e) {

@@ -76,7 +76,8 @@ export const getOrdersHandler = async (
           'createdAt': "desc",
         },
       },
-      req.params.select
+      req.params.select,
+      req.query.search
     );
     return res.send(books);
   } catch (e) {

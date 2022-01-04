@@ -17,6 +17,7 @@ exports.getSharedSchema = {
     query: (0, zod_1.object)({
         page: (0, zod_1.string)({ required_error: "Page number must be provided" }).min(1),
         size: (0, zod_1.string)({ required_error: "Size number must be provided" }).min(1),
+        search: (0, zod_1.string)().optional().default("")
     }),
     params: (0, zod_1.object)({
         select: (0, zod_1.string)().optional(),

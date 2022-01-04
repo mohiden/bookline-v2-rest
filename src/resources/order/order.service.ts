@@ -14,9 +14,10 @@ export const createOrder = (
 
 export const getOrders = (
   options: QueryOptions = { lean: true },
-  select?: string
+  select?: string,
+  search?: string
 ) => {
-  return OrderModel.find({}, {}, options)
+  return OrderModel.find(search ? { $text: { $search: search } } : {}, {}, options)
     .populate({
       path: "items",
       populate: {

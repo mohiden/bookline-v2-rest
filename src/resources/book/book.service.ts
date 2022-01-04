@@ -10,7 +10,8 @@ export const createBook = (
 
 export const getBooks = (
   options: QueryOptions = { lean: true },
-  select?: string
+  select?: string,
+  search?: string
 ) => {
-  return BookModel.find({}, {}, options).select(select);
+  return BookModel.find(search ? { $text: { $search: search } } : {}, {}, options).select(select);
 };

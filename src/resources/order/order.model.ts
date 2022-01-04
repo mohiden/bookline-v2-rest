@@ -64,6 +64,8 @@ schema.methods.genDiscountAndTotalPrice = async function (shipmentItemId: string
   this.totalPrice = (this.totalPrice! + itemAmount * shipmentItem.price) - discount;
 }
 
+schema.index({ name: 'text' });
+
 export const OrderModel = mongoose.model<IOrder>(
   "Order",
   schema,

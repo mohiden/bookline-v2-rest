@@ -6,8 +6,8 @@ const createBook = (input) => {
     return _1.BookModel.create(input);
 };
 exports.createBook = createBook;
-const getBooks = (options = { lean: true }, select) => {
-    return _1.BookModel.find({}, {}, options).select(select);
+const getBooks = (options = { lean: true }, select, search) => {
+    return _1.BookModel.find(search ? { $text: { $search: search } } : {}, {}, options).select(select);
 };
 exports.getBooks = getBooks;
 //# sourceMappingURL=book.service.js.map

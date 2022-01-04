@@ -22,5 +22,6 @@ const schema = new mongoose.Schema<IBook>(
   },
   { timestamps: true }
 );
+schema.index({ name: 'text' });
 
 export const BookModel = mongoose.model<IBook>("Book", schema, COLLECTION_NAME);

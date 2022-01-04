@@ -22,5 +22,6 @@ const schema = new mongoose_1.default.Schema({
         required: true,
     },
 }, { timestamps: true });
+schema.index({ name: 'text' });
 exports.BookModel = mongoose_1.default.model("Book", schema, COLLECTION_NAME);
 //# sourceMappingURL=book.model.js.map
