@@ -72,6 +72,9 @@ export const getOrdersHandler = async (
       {
         limit: Number(req.query.size),
         skip: Number(req.query.page),
+        sort: {
+          'createdAt': "desc",
+        },
       },
       req.params.select
     );

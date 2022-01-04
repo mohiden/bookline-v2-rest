@@ -42,6 +42,9 @@ const getOrdersHandler = async (req, res) => {
         const books = await (0, _1.getOrders)({
             limit: Number(req.query.size),
             skip: Number(req.query.page),
+            sort: {
+                'createdAt': "desc",
+            },
         }, req.params.select);
         return res.send(books);
     }

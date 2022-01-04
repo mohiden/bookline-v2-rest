@@ -7,7 +7,7 @@ const itemSchema = (0, zod_1.object)({
     shipmentItem: (0, zod_1.string)({
         required_error: "shipmentItemId must not be empty",
     }),
-    discount: (0, zod_1.number)().default(0),
+    discount: (0, zod_1.number)({ required_error: "Discount must be less than 0" }).min(0).default(0),
     amount: (0, zod_1.number)({ required_error: "Amount must not be empty" }).min(1),
 });
 exports.createOrderSchema = (0, zod_1.object)({

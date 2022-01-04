@@ -5,7 +5,7 @@ const itemSchema = object({
   shipmentItem: string({
     required_error: "shipmentItemId must not be empty",
   }),
-  discount: number().default(0),
+  discount: number({ required_error: "Discount must be less than 0" }).min(0).default(0),
   amount: number({ required_error: "Amount must not be empty" }).min(1),
 })
 
