@@ -13,5 +13,5 @@ export const getBooks = (
   select?: string,
   search?: string
 ) => {
-  return BookModel.find(search ? { $text: { $search: search } } : {}, {}, options).select(select);
+  return BookModel.find(search ? { name: { $regex: '.*' + search + '.*' } } : {}, {}, options).select(select).exec();
 };

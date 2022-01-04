@@ -7,7 +7,7 @@ const createBook = (input) => {
 };
 exports.createBook = createBook;
 const getBooks = (options = { lean: true }, select, search) => {
-    return _1.BookModel.find(search ? { $text: { $search: search } } : {}, {}, options).select(select);
+    return _1.BookModel.find(search ? { name: { $regex: '.*' + search + '.*' } } : {}, {}, options).select(select).exec();
 };
 exports.getBooks = getBooks;
 //# sourceMappingURL=book.service.js.map

@@ -17,7 +17,7 @@ export const getOrders = (
   select?: string,
   search?: string
 ) => {
-  return OrderModel.find(search ? { $text: { $search: search } } : {}, {}, options)
+  return OrderModel.find(search ? { name: { $regex: '.*' + search + '.*' } } : {}, {}, options)
     .populate({
       path: "items",
       populate: {

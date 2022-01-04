@@ -8,7 +8,7 @@ const createOrder = (input) => {
 };
 exports.createOrder = createOrder;
 const getOrders = (options = { lean: true }, select, search) => {
-    return _1.OrderModel.find(search ? { $text: { $search: search } } : {}, {}, options)
+    return _1.OrderModel.find(search ? { name: { $regex: '.*' + search + '.*' } } : {}, {}, options)
         .populate({
         path: "items",
         populate: {

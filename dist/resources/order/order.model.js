@@ -63,6 +63,5 @@ schema.methods.genDiscountAndTotalPrice = async function (shipmentItemId, discou
         return console.log("item amount not found");
     this.totalPrice = (this.totalPrice + itemAmount * shipmentItem.price) - discount;
 };
-schema.index({ name: 'text' });
 exports.OrderModel = mongoose_1.default.model("Order", schema, COLLECTION_NAME);
 //# sourceMappingURL=order.model.js.map
