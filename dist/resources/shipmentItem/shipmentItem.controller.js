@@ -22,7 +22,7 @@ const getShipmentItemsHandler = async (req, res) => {
         return res.send(await (0, _1.getShipmentItems)({
             skip: Number(req.query.page),
             limit: Number(req.query.size),
-        }, req.params.select));
+        }, req.params.select, req.query.search));
     }
     catch (e) {
         console.log(e);

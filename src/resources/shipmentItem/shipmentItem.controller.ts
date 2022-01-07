@@ -36,7 +36,8 @@ export const getShipmentItemsHandler = async (
           skip: Number(req.query.page),
           limit: Number(req.query.size),
         },
-        req.params.select
+        req.params.select,
+        req.query.search
       ),
     );
   } catch (e) {

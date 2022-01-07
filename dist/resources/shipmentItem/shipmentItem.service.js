@@ -6,9 +6,9 @@ const createShipmentItem = (input) => {
     return _1.shipmentItemModel.create(input);
 };
 exports.createShipmentItem = createShipmentItem;
-const getShipmentItems = (options = { lean: true, skip: 0, limit: 0 }, select) => {
+const getShipmentItems = (options = { lean: true, skip: 0, limit: 0 }, select, search) => {
     return _1.shipmentItemModel
-        .find({}, {}, options)
+        .find(search ? { name: { $regex: '.*' + search + '.*' } } : {}, {}, options)
         .populate("shipment")
         .select(select);
 };

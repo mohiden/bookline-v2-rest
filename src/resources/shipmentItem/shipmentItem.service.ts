@@ -15,10 +15,11 @@ export const createShipmentItem = (
 
 export const getShipmentItems = (
   options: QueryOptions = { lean: true, skip: 0, limit: 0 },
-  select?: string
+  select?: string,
+  search?: string
 ) => {
   return shipmentItemModel
-    .find({}, {}, options)
+    .find(search ? { name: { $regex: '.*' + search + '.*' } } : {}, {}, options)
     .populate("shipment")
     .select(select);
 };
