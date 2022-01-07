@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOrdersHandler = exports.createOrderHandler = void 0;
+exports.mark_as_delivered_handler = exports.getOrdersHandler = exports.createOrderHandler = void 0;
 const _1 = require(".");
 const __1 = require("..");
 const createOrderHandler = async (req, res) => {
@@ -57,4 +57,15 @@ const getOrdersHandler = async (req, res) => {
     }
 };
 exports.getOrdersHandler = getOrdersHandler;
+const mark_as_delivered_handler = async (req, res) => {
+    try {
+        await (0, _1.mark_as_delivered)(req.params.id);
+        return res.send(true);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).send(e.message);
+    }
+};
+exports.mark_as_delivered_handler = mark_as_delivered_handler;
 //# sourceMappingURL=order.controller.js.map

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOrders = exports.createOrder = void 0;
+exports.mark_as_delivered = exports.getOrders = exports.createOrder = void 0;
 const _1 = require(".");
 const createOrder = (input) => {
     const order = new _1.OrderModel(input);
@@ -19,4 +19,11 @@ const getOrders = (options = { lean: true }, select, search) => {
         .select(select).exec();
 };
 exports.getOrders = getOrders;
+const mark_as_delivered = (id) => {
+    _1.OrderModel.findOne({ _id: id }, async function (_, order) {
+        order.items[0].isDelivered = true;
+        await order.save();
+    });
+};
+exports.mark_as_delivered = mark_as_delivered;
 //# sourceMappingURL=order.service.js.map

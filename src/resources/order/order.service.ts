@@ -27,3 +27,10 @@ export const getOrders = (
     })
     .select(select).exec();
 };
+
+export const mark_as_delivered = (id: DocumentDefinition<IOrder>["_id"]) => {
+  OrderModel.findOne({ _id: id }, async function (_: Error, order: IOrder) {
+    order.items[0].isDelivered = true;
+    await order.save();
+  })
+}

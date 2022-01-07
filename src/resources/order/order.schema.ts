@@ -29,3 +29,11 @@ export const getOrdersSchema = object({
 });
 export type GetOrdersInput = TypeOf<typeof getOrdersSchema>;
 
+//mark as delivered 
+export const markAsDeliveredSchema = object({
+  params: object({
+    id: string({ required_error: "id must not be empty" })
+  })
+})
+
+export type MarkAsDeliveredInput = TypeOf<typeof markAsDeliveredSchema>;

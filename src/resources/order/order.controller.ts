@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IUser } from "src/lib";
-import { createOrder, CreateOrderInput, getOrders, GetOrdersInput } from ".";
+import { createOrder, CreateOrderInput, getOrders, GetOrdersInput, MarkAsDeliveredInput, mark_as_delivered } from ".";
 import { createCustomer, shipmentItemModel, shipmentItemValidation } from "..";
 
 //create
@@ -89,3 +89,14 @@ export const getOrdersHandler = async (
     return res.status(400).send((e.message && e.message) || e.toString());
   }
 };
+
+//statics mark as delivered
+export const mark_as_delivered_handler = async (req: Request<MarkAsDeliveredInput["params"]>, res: Response) => {
+  try {
+    await mark_as_delivered(req.params.id);
+    return res.send(true);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send(e.message);
+  }
+}

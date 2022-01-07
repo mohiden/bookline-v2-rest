@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOrdersSchema = exports.createOrderSchema = void 0;
+exports.markAsDeliveredSchema = exports.getOrdersSchema = exports.createOrderSchema = void 0;
 const utils_1 = require("../../utils");
 const zod_1 = require("zod");
 const itemSchema = (0, zod_1.object)({
@@ -23,4 +23,9 @@ exports.createOrderSchema = (0, zod_1.object)({
     }),
 });
 exports.getOrdersSchema = (0, zod_1.object)(Object.assign({}, utils_1.getSharedSchema));
+exports.markAsDeliveredSchema = (0, zod_1.object)({
+    params: (0, zod_1.object)({
+        id: (0, zod_1.string)({ required_error: "id must not be empty" })
+    })
+});
 //# sourceMappingURL=order.schema.js.map
