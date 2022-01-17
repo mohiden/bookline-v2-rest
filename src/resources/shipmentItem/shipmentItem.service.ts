@@ -19,10 +19,11 @@ export const getShipmentItems = (
   search?: string
 ) => {
   return shipmentItemModel
-    .find(search ? { name: { $regex: '.*' + search + '.*' } } : {}, {}, options)
+    .find(search ? { name: { $regex: '.*' + search + '.*' }, } : {}, {}, options)
     .populate("shipment")
     .select(select);
 };
+
 
 export const shipmentItemValidation = async (
   amount: number,
@@ -33,7 +34,6 @@ export const shipmentItemValidation = async (
 
   const item = await shipmentItemModel.findOne({ _id: shipmentItemId });
   if (!item) {
-    // errors.push("shipment item was not found!");
     error = "shipment item was not found!";
     return error;
   }

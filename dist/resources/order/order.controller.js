@@ -59,7 +59,7 @@ const getOrdersHandler = async (req, res) => {
 exports.getOrdersHandler = getOrdersHandler;
 const mark_as_delivered_handler = async (req, res) => {
     try {
-        await (0, _1.mark_as_delivered)(req.params.id);
+        (0, _1.mark_as_delivered)(req.params.orderId, req.params.itemId);
         return res.send(true);
     }
     catch (e) {

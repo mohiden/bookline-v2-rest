@@ -93,7 +93,7 @@ export const getOrdersHandler = async (
 //statics mark as delivered
 export const mark_as_delivered_handler = async (req: Request<MarkAsDeliveredInput["params"]>, res: Response) => {
   try {
-    await mark_as_delivered(req.params.id);
+    mark_as_delivered(req.params.orderId, req.params.itemId);
     return res.send(true);
   } catch (e) {
     console.log(e);

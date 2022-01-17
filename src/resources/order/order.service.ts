@@ -1,5 +1,5 @@
 import { DocumentDefinition, QueryOptions } from "mongoose";
-import { IOrder } from "src/lib";
+import { IItem, IOrder } from "src/lib";
 import { OrderModel } from ".";
 
 export const createOrder = (
@@ -28,9 +28,14 @@ export const getOrders = (
     .select(select).exec();
 };
 
-export const mark_as_delivered = (id: DocumentDefinition<IOrder>["_id"]) => {
-  OrderModel.findOne({ _id: id }, async function (_: Error, order: IOrder) {
-    order.items[0].isDelivered = true;
+export const mark_as_delivered = (orderId: DocumentDefinition<IOrder>["_id"], itemId: DocumentDefinition<IItem>["_id"]) => {
+
+  OrderModel.findOne({ _id: orderId }, async function (_: Error, order: IOrder) {
+    order.items.map(item => {
+      if (item._id === itemId) {
+        item.isDelivered = true;
+      }
+    })
     await order.save();
   })
 }

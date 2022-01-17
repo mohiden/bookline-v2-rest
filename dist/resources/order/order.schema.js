@@ -25,7 +25,8 @@ exports.createOrderSchema = (0, zod_1.object)({
 exports.getOrdersSchema = (0, zod_1.object)(Object.assign({}, utils_1.getSharedSchema));
 exports.markAsDeliveredSchema = (0, zod_1.object)({
     params: (0, zod_1.object)({
-        id: (0, zod_1.string)({ required_error: "id must not be empty" })
+        orderId: (0, zod_1.string)({ required_error: "orderId must not be empty" }),
+        itemId: (0, zod_1.string)({ required_error: "itemId must not be empty" })
     })
 });
 //# sourceMappingURL=order.schema.js.map

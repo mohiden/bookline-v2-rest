@@ -19,9 +19,13 @@ const getOrders = (options = { lean: true }, select, search) => {
         .select(select).exec();
 };
 exports.getOrders = getOrders;
-const mark_as_delivered = (id) => {
-    _1.OrderModel.findOne({ _id: id }, async function (_, order) {
-        order.items[0].isDelivered = true;
+const mark_as_delivered = (orderId, itemId) => {
+    _1.OrderModel.findOne({ _id: orderId }, async function (_, order) {
+        order.items.map(item => {
+            if (item._id === itemId) {
+                item.isDelivered = true;
+            }
+        });
         await order.save();
     });
 };

@@ -32,7 +32,8 @@ export type GetOrdersInput = TypeOf<typeof getOrdersSchema>;
 //mark as delivered 
 export const markAsDeliveredSchema = object({
   params: object({
-    id: string({ required_error: "id must not be empty" })
+    orderId: string({ required_error: "orderId must not be empty" }),
+    itemId: string({ required_error: "itemId must not be empty" })
   })
 })
 

@@ -12,6 +12,7 @@ export interface IOrder extends BaseModel {
 }
 
 export interface IItem {
+  _id?: string;
   shipmentItem: IShipmentItem["_id"];
   discount: number;
   amount: number;
