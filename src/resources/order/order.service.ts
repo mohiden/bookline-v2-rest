@@ -32,7 +32,8 @@ export const mark_as_delivered = (orderId: DocumentDefinition<IOrder>["_id"], it
 
   OrderModel.findOne({ _id: orderId }, async function (_: Error, order: IOrder) {
     order.items.map(item => {
-      if (item._id === itemId) {
+      if (item._id?.toString() === itemId?.toString()) {
+        console.log(item);
         item.isDelivered = true;
       }
     })

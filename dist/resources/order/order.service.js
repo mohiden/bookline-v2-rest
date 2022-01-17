@@ -22,7 +22,9 @@ exports.getOrders = getOrders;
 const mark_as_delivered = (orderId, itemId) => {
     _1.OrderModel.findOne({ _id: orderId }, async function (_, order) {
         order.items.map(item => {
-            if (item._id === itemId) {
+            var _a;
+            if (((_a = item._id) === null || _a === void 0 ? void 0 : _a.toString()) === (itemId === null || itemId === void 0 ? void 0 : itemId.toString())) {
+                console.log(item);
                 item.isDelivered = true;
             }
         });

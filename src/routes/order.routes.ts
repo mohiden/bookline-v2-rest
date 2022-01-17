@@ -14,7 +14,7 @@ const router = Router();
 router.get("/:select?", validateResource(getOrdersSchema), getOrdersHandler);
 router.post("/", validateResource(createOrderSchema), createOrderHandler);
 router.get(
-    "/mark_as_delivered/:id",
+    "/mark_as_delivered/:orderId/:itemId",
     validateResource(markAsDeliveredSchema),
     mark_as_delivered_handler
 );
